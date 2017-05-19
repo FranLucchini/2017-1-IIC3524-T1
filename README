@@ -1,0 +1,24 @@
+Manejo casos borde:
+  Para manejar los casos que no tienen suficientes pixeles para calcular el valor
+  final, se extendieron los colores en la frontera del archivo .png
+
+Version de OpenMP: se utilizó este comando para instalar OpenMP
+  sudo apt install libomp-dev
+
+Modo de uso
+  1. Make
+  2. ./filter <input.png> <kernel.txt> <output.png> <number_of_iterations> <number_of_threads>
+
+Estructura de un archivo de filtro:
+  - La primera linea es la cantidad de filas, llamado row
+  - La segunda linea es la cantidad de columnas, llamado col
+  - Las siguientes 'row' lineas tienen 'col' elementos que corresponden a las filas del filtro.
+  - Ejemplo:
+
+    3
+    7
+    0 0 0 0 0 0 0
+    1 1 1 2 1 1 1
+    -1 -1 -1 -1 -1 -1 -1
+
+Paralelismo aplicado:
