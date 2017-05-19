@@ -33,6 +33,7 @@
 *.su
 
 # Especifico de esta tarea
-
 *.png
-Programa/filter
+filter
+
+TestScripts/**/

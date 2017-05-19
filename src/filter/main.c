@@ -16,7 +16,7 @@ void process_image (Image* img, Image* result, float** kernel, int k_row, int k_
 		//printf("Hello world! I am thread %d in for 1, i=%i\n", tid, i);
 		//int tid = omp_get_thread_num();
 		//int num = omp_get_num_threads();
-		#pragma omp parallel for shared(img, result, kernel)
+		//#pragma omp parallel for shared(img, result, kernel)
 		for (j = 0; j < img->width; j++) {
 			//printf("Hello world! I am thread %i in for 1, i=%i, j=%i\n", tid, i, j);
 			//printf("Num of thread %i\n", num);
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
   + ( requestEnd.tv_nsec - requestStart.tv_nsec )
   / BILLION;
 
-	printf("Takes %f seconds\n",accum);
+	printf("Time:%f, Thread(s):%i, Repetitions:%i\n", accum, num_threads, interations);
 	img_png_write_to_file (result, output_file);
 
 	/* Liberamos los recursos */
