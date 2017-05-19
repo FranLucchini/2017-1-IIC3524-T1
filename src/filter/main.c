@@ -11,12 +11,8 @@ void process_image (Image* img, Image* result, float** kernel, int k_row, int k_
 	omp_set_num_threads(num_threads);
 	/* Change colors */
 	int i, j;
-	#pragma omp parallel for shared(img, result, kernel)
+	#pragma omp parallel for shared(img, result, kernel) private(j)
 	for (i = 0; i < img->height; i++) {
-		//printf("Hello world! I am thread %d in for 1, i=%i\n", tid, i);
-		//int tid = omp_get_thread_num();
-		//int num = omp_get_num_threads();
-		//#pragma omp parallel for shared(img, result, kernel)
 		for (j = 0; j < img->width; j++) {
 			//printf("Hello world! I am thread %i in for 1, i=%i, j=%i\n", tid, i, j);
 			//printf("Num of thread %i\n", num);

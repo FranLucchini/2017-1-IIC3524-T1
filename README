@@ -22,3 +22,11 @@ Estructura de un archivo de filtro:
     -1 -1 -1 -1 -1 -1 -1
 
 Paralelismo aplicado:
+  Se aplicó paralelismo en el for que calcula el valor final de cada pixels
+
+Tets:
+  En la carpeta TestScripts hay 6 tests, los nombres tienen la siguiente estructura:
+  m<n>*<n>_i<w><h>.sh
+  - n: tamaño de la máscara
+  - w: width
+  - h: height
