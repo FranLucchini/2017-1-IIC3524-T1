@@ -6,15 +6,14 @@
 #define BILLION 1E9
 
 void process_image (Image* img, Image* result, float** kernel, int k_row, int k_col, int num_threads) {
-	//int tid;
-
 	omp_set_num_threads(num_threads);
 	/* Change colors */
-	int i, j;
-	#pragma omp parallel for shared(img, result, kernel) private(j)
+	int i;
+	#pragma omp parallel for shared(img, result, kernel) private(i)
 	for (i = 0; i < img->height; i++) {
-		for (j = 0; j < img->width; j++) {
-			//printf("Hello world! I am thread %i in for 1, i=%i, j=%i\n", tid, i, j);
+		//printf("====\n");
+		for (int j = 0; j < img->width; j++) {
+			//printf("Hello world! I am thread %i in for 1, i=%i, j=%i\n", omp_get_thread_num(), i, j);
 			//printf("Num of thread %i\n", num);
 			float determinant[3] = {0.0f, 0.0f, 0.0f}; // |R|G|B|
 			int r_desp = (k_row-1)/2;
@@ -86,15 +85,33 @@ void process_image (Image* img, Image* result, float** kernel, int k_row, int k_
 									//printf("    R sum: %f * %f = %f \n", img->pixels[0][0].R, kernel[x][y], img->pixels[0][0].R * kernel[x][y]);
 								}
 								//printf("----\n" );
+								if(determinant[0] > 255) {
+									determinant[0] = 255;
+								}
+								if(determinant[1] > 255) {
+									determinant[1] = 255;
+								}
+								if(determinant[2] > 255) {
+									determinant[2] = 255;
+								}
+
+								if(determinant[0] < 0 ) {
+									determinant[0] = 0;
+								}
+								if(determinant[1] < 0 ) {
+									determinant[1] = 0;
+								}
+								if(determinant[2] < 0 ) {
+									determinant[2] = 0;
+								}
 					}
 			}
-			//printf("determinant R:%f G:%f B:%f\n", determinant[0], determinant[1], determinant[2]);
+			printf("determinant R:%f G:%f B:%f\n", determinant[0], determinant[1], determinant[2]);
 			result->pixels[i][j].R = determinant[0];
 			result->pixels[i][j].G = determinant[1];
 			result->pixels[i][j].B = determinant[2];
 		}
 	}
-
 }
 
 void print_kernel(float** kernel, int row, int col) {
@@ -182,7 +199,7 @@ int main(int argc, char *argv[])
 	int row = 0;
 	int col = 0;
 	float** kernel = get_kernel(kernel_file, &row, &col);
-
+	print_kernel(kernel, row, col);
 	/* Create output image */
 	Image* result  = malloc(sizeof(Image));
 	result->height = img->height;
